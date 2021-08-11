@@ -6,10 +6,12 @@ import Image from "next/image";
 import Footer from "../components/Footer";
 import { useRef } from "react";
 import { useRouter } from "next/router";
+import { signIn, useSession } from "next-auth/client";
 
 export default function Home() {
     const searchInputRef = useRef(null);
     const router = useRouter();
+    const [session] = useSession();
 
     const search = (e) => {
         e.preventDefault();
@@ -20,7 +22,7 @@ export default function Home() {
             return;
         }
 
-        router.push(`/search?term=${term}`)
+        router.push(`/search?term=${term}`);
     };
 
     return (
@@ -47,7 +49,11 @@ export default function Home() {
                     <ViewGridIcon className="h-10 w-10 p-2 rounded-full hover:bg-gray-100 cursor-pointer" />
 
                     {/* Avatar */}
-                    <Avatar url="/image.jpg" />
+                    {!session ? (
+                        <button onClick={signIn}>Sign In</button>
+                    ) : (
+                        <Avatar url={session.user.image} />
+                    )}
                 </div>
             </header>
 

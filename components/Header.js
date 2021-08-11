@@ -4,10 +4,12 @@ import { useRef } from "react";
 import { MicrophoneIcon, SearchIcon, XIcon } from "@heroicons/react/solid";
 import Avatar from "./Avatar";
 import HeaderOptions from "./HeaderOptions";
+import { signIn, useSession } from "next-auth/client";
 
 function Header() {
     const router = useRouter();
     const searchInputRef = useRef(null);
+    const [session] = useSession();
 
     const search = (e) => {
         e.preventDefault();
@@ -46,7 +48,12 @@ function Header() {
                         Search
                     </button>
                 </form>
-                <Avatar url="/image.jpg" className="ml-auto" />
+                {!session ? (
+                    <button onClick={signIn} className="ml-auto">Sign In</button>
+                ) : (
+                    <Avatar url={session.user.image} className="ml-auto" />
+                )}
+                {/* <Avatar url="/image.jpg" className="ml-auto" /> */}
             </div>
 
             {/* Header-Options */}
