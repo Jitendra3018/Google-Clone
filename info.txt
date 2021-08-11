@@ -1,0 +1,8 @@
+Technologies used in this build are as follow: 
+
+1. React JS
+2. Next JS
+3. Google API KEY (for the search results)
+4. Tailwind CSS
+5. Hero Icons
+6. Vercel (For deployment)
